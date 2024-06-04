@@ -3,5 +3,8 @@ from django.urls import include, path
 from .views import *
 
 urlpatterns = [
-    path("",User.as_view(),name='User')
+    
+    path('',UserActions.as_view()),
+    path('<int:TMPID>',UserActions.as_view()),
+    
 ]

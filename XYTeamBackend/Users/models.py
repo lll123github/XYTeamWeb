@@ -2,10 +2,8 @@ from django.db import models
 
 # Create your models here.
 
-class User(models.Model):
-    username = models.CharField(max_length=20,blank=True,null=True)
-    password = models.CharField(max_length=40)
-    email = models.EmailField(blank=True,null=True)
+class UserInfo(models.Model):
+    user =models.OneToOneField('auth.User',on_delete=models.CASCADE)
     phone = models.PositiveBigIntegerField(blank=True,null=True)
     TMPID = models.PositiveIntegerField(primary_key=True)
     TMPName = models.CharField(max_length=20,blank=True,null=True)
