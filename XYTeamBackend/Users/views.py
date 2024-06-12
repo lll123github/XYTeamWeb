@@ -14,7 +14,7 @@ class UserActions(View):
                 return JsonResponse({'msg':"User is not found when finding id!"},status=404)
             user=user[0]
             userinfo=user.userinfo
-            return JsonResponse(data={'id':user.id,'username':user.username,'phone':userinfo.phone,'TMPID':userinfo.TMPID,'TMPName':userinfo.TMPName,'steamID':userinfo.steamID,'QQ':userinfo.QQ},status=200)
+            return JsonResponse(data={'id':user.id,'username':user.username,'phone':userinfo.phone,'TMPID':userinfo.TMPID,'TMPName':userinfo.TMPName,'steamID':userinfo.steamID,'QQ':userinfo.QQ, 'credit':userinfo.credit},status=200)
         
         if 'username' in body:
             users=users.filter(username=body['username'])
@@ -57,7 +57,7 @@ class UserActions(View):
             print(user)
             userinfo=UserInfo.objects.filter(user=user)
             userinfo=userinfo[0]
-            results_list.append({'id':user.id,'username':user.username,'phone':userinfo.phone,'TMPID':userinfo.TMPID,'TMPName':userinfo.TMPName,'steamID':userinfo.steamID,'QQ':userinfo.QQ})
+            results_list.append({'id':user.id,'username':user.username,'phone':userinfo.phone,'TMPID':userinfo.TMPID,'TMPName':userinfo.TMPName,'steamID':userinfo.steamID,'QQ':userinfo.QQ,'credit':userinfo.credit})
         return JsonResponse({"userinfo":results_list},status=200)
 
     def post(self, request):#增

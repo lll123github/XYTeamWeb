@@ -9,3 +9,4 @@ class UserInfo(models.Model):
     TMPName = models.CharField(max_length=20,blank=True,null=True)
     steamID = models.PositiveBigIntegerField(blank=True,null=True)
     QQ = models.PositiveBigIntegerField(blank=True,null=True)
+    credit = models.PositiveBigIntegerField(default=0)
