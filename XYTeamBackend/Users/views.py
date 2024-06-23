@@ -3,8 +3,9 @@ import demjson
 from django.contrib.auth.models import User
 from .models import *
 from django.views import View
+from django.shortcuts import render
 # Create your views here.
-class UserActions(View):
+class UsersActions(View):
     def get(self, request):#查
         body=demjson.decode(request.body)
         users=User.objects.all()
@@ -15,7 +16,6 @@ class UserActions(View):
             user=user[0]
             userinfo=user.userinfo
             return JsonResponse(data={'id':user.id,'username':user.username,'phone':userinfo.phone,'TMPID':userinfo.TMPID,'TMPName':userinfo.TMPName,'steamID':userinfo.steamID,'QQ':userinfo.QQ, 'credit':userinfo.credit},status=200)
-        
         if 'username' in body:
             users=users.filter(username=body['username'])
             if not users.exists():
@@ -51,19 +51,21 @@ class UserActions(View):
             users=users.filter(userinfo__QQ=body['QQ'])
             if not users.exists():
                 return JsonResponse({'msg':"UsersInfo is not found when finding QQ!"},status=404)
-        print(users)
         results_list=[]
         for user in users:#还需要对多个查询结果和单个查询结果的结果进行区分
             print(user)
             userinfo=UserInfo.objects.filter(user=user)
             userinfo=userinfo[0]
-            results_list.append({'id':user.id,'username':user.username,'phone':userinfo.phone,'TMPID':userinfo.TMPID,'TMPName':userinfo.TMPName,'steamID':userinfo.steamID,'QQ':userinfo.QQ,'credit':userinfo.credit})
-        return JsonResponse({"userinfo":results_list},status=200)
+            results_list.append({'id':user.id,'username':user.username,'email':user.email,'phone':userinfo.phone,'TMPID':userinfo.TMPID,'TMPName':userinfo.TMPName,'steamID':userinfo.steamID,'QQ':userinfo.QQ,'credit':userinfo.credit})
+        return render(request,'UserActionsGet200.html',{"userinfo":results_list})
 
     def post(self, request):#增
         body=demjson.decode(request.body)
         user=User.objects.create_user(username=body['username'],password=body['password'])
         user_info=UserInfo.objects.create(user=user,TMPID=body['TMPID'])
+        if 'email' in body:
+            user.email=body['email']
+            user.save()
         if 'phone' in body:
             user_info.phone=body['phone']
         if 'TMPName' in body:
@@ -73,9 +75,21 @@ class UserActions(View):
         if 'QQ' in body:
             user_info.QQ=body['QQ']
         user_info.save()
+        
         return JsonResponse({'id':user.id},status=200)
 
+class OneUserActions(View):
+    def get(self,request,TMPID):
+        body=demjson.decode(request.body)
+        users=User.objects.all()
+        user=users.filter(userinfo__TMPID=TMPID)
+        if not user.exists():
+            return JsonResponse({'msg':"UsersInfo is not found when finding TMPID!"},status=404)
+        user=user[0]
+        userinfo=UserInfo.objects.filter(user=user)
 
+        return JsonResponse({'id':user.id,'username':user.username,'email':user.email,'phone':userinfo.phone,'TMPID':userinfo.TMPID,'TMPName':userinfo.TMPName,'steamID':userinfo.steamID,'QQ':userinfo.QQ,'credit':userinfo.credit},status=200)
+    
 
     def put(self, request,TMPID):#改
         body=demjson.decode(request.body)
@@ -109,14 +123,12 @@ class UserActions(View):
         # user.save()
         userinfo.save()
         return JsonResponse({'id':user.id},status=200)
-
-
+    
     def delete(self, request, TMPID):#删
         userinfo=UserInfo.objects.filter(TMPID=TMPID)
         if not userinfo.exists():
             return JsonResponse({'msg':"UserInfo is not found!"},status=404)
         userinfo.delete()
         return JsonResponse({'msg':"UserInfo is deleted!"},status=200)
-
     
 

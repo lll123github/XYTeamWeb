@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>User information</title>
+    <script type="text/javascript" src="UserActionsGet200.js"></script>
+</head>
+<body>
+    <h1>用户信息列表</h1>
+    <table>
+        <caption>用户信息列表</caption>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>用户名</th>
+                <th>TMPID</th>
+                <th>TMP名称</th>
+                <th>SteamID</th>
+                <th>QQ</th>
+                <th>邮箱</th>
+                <th>手机号</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in userinfo %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.tmpid }}</td>
+                <td>{{ user.tmpname }}</td>
+                <td>{{ user.steamid }}</td>
+                <td>{{ user.qq }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

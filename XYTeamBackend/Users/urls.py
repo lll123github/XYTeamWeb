@@ -4,7 +4,7 @@ from .views import *
 
 urlpatterns = [
     
-    path('',UserActions.as_view()),
-    path('<int:TMPID>',UserActions.as_view()),
+    path('',UsersActions.as_view()),
+    path('<int:TMPID>',OneUserActions.as_view()),
     
 ]
