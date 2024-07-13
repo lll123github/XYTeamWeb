@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}用户创建界面{% endblock %}
+
+{% block content %}
+    <h1>用户创建界面</h1>
+    <form method="post" action="/users">
+        {% comment %} {% csrf_token %} {% endcomment %}
+        {{ user_form.as_p }}
+        {{ userinfo_form.as_p}}
+        <button type="submit">新建</button>
+    </form>
+
+
+{% endblock %}

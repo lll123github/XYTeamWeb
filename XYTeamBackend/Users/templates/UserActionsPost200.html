@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}用户添加{% endblock %}
+
+{% block content %}
+<h1>用户添加</h1>
+<form action="/users/add" method="post">
+    <label for="username">用户名</label>
+    <input type="text" id="username" name="username" required>
+    <label for="tmpid">TMPID</label>
+    <input type="text" id="tmpid" name="tmpid" required>
+    <label for="password">密码</label>
+    <input type="password" id="password" name="password" required>
+    <label for="tmpname">TMP名称</label>
+    <input type="text" id="tmpname" name="tmpname">
+    <label for="steamid">SteamID</label>
+    <input type="text" id="steamid" name="steamid">
+    <label for="qq">QQ</label>
+    <input type="text" id="qq" name="qq">
+    <label for="email">邮箱</label>
+    <input type="email" id="email" name="email">
+    <label for="phone">手机号</label>
+    <input type="text" id="phone" name="phone">
+
+    <button type="submit">提交</button>
+</form>
+{% endblock %}
