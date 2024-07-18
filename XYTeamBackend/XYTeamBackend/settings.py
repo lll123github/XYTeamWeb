@@ -128,3 +128,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 STATICFILES_DIRS = [
     ('all',BASE_DIR / "static"),
 ]
+
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
