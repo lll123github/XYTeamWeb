@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}用户创建界面{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h2>
+        用户登录界面
+    </h2>
+    <form method="post" action="/login">
+        {{ login_form.as_p }}
+        <button type="submit">登录</button>
+    </form>
+</div>
+{% endblock %}

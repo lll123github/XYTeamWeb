@@ -32,7 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "HelloWorld.apps.HelloworldConfig",
+    # "HelloWorld.apps.HelloworldConfig",
+    "Authentication.apps.AuthenticationConfig",
     "Users.apps.UsersConfig",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -126,7 +128,15 @@ STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 STATICFILES_DIRS = [
-    ('all',BASE_DIR / "static"),
+    os.path.join(BASE_DIR,'static')
 ]
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.TokenAuthentication',
+#     ],
+# }
+
+SILENCED_SYSTEM_CHECKS = ['urls.W002']

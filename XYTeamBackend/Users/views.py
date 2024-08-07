@@ -86,7 +86,7 @@ class UsersActions(View):
     #     # return JsonResponse({'id':user.id},status=200)
     #     return render(request,'UserActionsPost200.html',{"id":user.id})
 
-    def post(self, request):
+    def post(self, request):#增加单个用户
         user_form = UserForm(request.POST)
         userinfo_form = UserInfoForm(request.POST)
 
@@ -102,10 +102,10 @@ class UsersActions(View):
             return render(request, 'UserActionsPost200.html', {"id": user.id})
         else:
             # 处理表单验证失败的情况
-            return render(request, self.template_name, {'user_form': user_form, 'userinfo_form': userinfo_form})
+            return render(request, 'PageCreateUser.html', {'user_form': user_form, 'userinfo_form': userinfo_form})
         
 class OneUserActions(View):
-    def get(self,request,TMPID):
+    def get(self,request,TMPID):#查询单个用户
         body=demjson.decode(request.body)
         users=User.objects.all()
         user=users.filter(userinfo__TMPID=TMPID)
@@ -156,6 +156,10 @@ class OneUserActions(View):
             return JsonResponse({'msg':"UserInfo is not found!"},status=404)
         userinfo.delete()
         return JsonResponse({'msg':"UserInfo is deleted!"},status=200)
+    
+    
+
+
     
 class PageCreateUser(View):
     template_name = 'PageCreateUser.html'
